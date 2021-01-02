@@ -15,6 +15,7 @@ interface NetlifyEventBody {
   deploy_ssl_url: string;
   error_message?: string;
   branch: string;
+  deploy_time: number;
 }
 
 enum Colors {
@@ -75,8 +76,18 @@ const getValueByKey = (
 const generateMessage = (body: NetlifyEventBody) => {
   const buildLogUrl = `${body.admin_url}/deploys/${body.id}`;
   const buildLogDescription = `Or check out the [build log](${buildLogUrl})`;
+  // var buildMessage = '';
+
+  // if (body.state == NetlifyStates.READY) {
+  //   buildMessage = `${getValueByKey(ContentMapping, body.state)} *${body.name}* in ${body.deploy_time} seconds`;
+  // } else {
+  //   buildMessage = `${getValueByKey(ContentMapping, body.state)} *${body.name}*`
+  // }
+
+  const buildMessage = body.state == NetlifyStates.READY ? `${getValueByKey(ContentMapping, body.state)} *${body.name}* in ${body.deploy_time} seconds` : `${getValueByKey(ContentMapping, body.state)} *${body.name}*`;
+
   return {
-    content: `${getValueByKey(ContentMapping, body.state)} *${body.name}*`,
+    content: buildMessage,  
     embeds: [
       {
         color: getValueByKey(ColorMapping, body.state),

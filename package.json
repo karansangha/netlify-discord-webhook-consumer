@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "hookcord": "^2.0.2",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "yarn": "^1.22.10"
   }
 }
